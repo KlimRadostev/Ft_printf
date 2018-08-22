@@ -6,32 +6,35 @@
 /*   By: kradoste <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 18:19:11 by kradoste          #+#    #+#             */
-/*   Updated: 2018/08/16 20:19:01 by kradoste         ###   ########.fr       */
+/*   Updated: 2018/08/21 17:42:12 by kradoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "printf.h"
 
-intmax_t		get_number(va_list arg, int flag)
+intmax_t		get_number(va_list arg, int len, int large)
 {
 	intmax_t	val;
 
-	if (flag == 3)
+	if (len == 3)
 		return (va_arg(arg, long long));
-	else if (flag == 4)
+	else if (len == 4)
 		return (va_arg(arg, long));
-	else if (flag == 5)
+	else if (len == 5)
 		return (va_arg(arg, intmax_t));
-	else if (flag == 6)
+	else if (len == 6)
 		return (va_arg(arg, size_t));
-	val = va_arg(arg, int);
-	if (flag == 0)
-		val = (int)val;
-	else if (flag == 1)
-		val = (char)val;
-	else if (flag == 2)
-		val = (short)val;
+	val = (large) ? va_arg(arg, long) : va_arg(arg, int);
+	if (!large)
+	{
+		if (len == 0)
+			val = (int)val;
+		else if (len == 1)
+			val = (char)val;
+		else if (len == 2)
+			val = (short)val;
+	}
 	return (val);
 }
 
@@ -70,36 +73,44 @@ char			*ft_itoa_base(intmax_t n)
 	return (str);
 }
 
-uintmax_t	get_uflag(uintmax_t value, int flag)
+uintmax_t	get_unumber(va_list arg, int len, int large)
 {
-	if (flag == 0)
-		return ((unsigned int)value);
-	else if (flag == 1)
-		return ((unsigned char)value);
-	else if (flag == 2)
-		return ((unsigned short int)value);
-	else if (flag == 3)
-		return ((unsigned long long)value);
-	else if (flag == 4)
-		return ((unsigned long)value);
-	else if (flag == 5)
-		return ((uintmax_t)value);
-	return ((size_t)value);
+	uintmax_t	val;
+
+	if (len == 3)
+		return (va_arg(arg, unsigned long long));
+	else if (len == 4)
+		return (va_arg(arg, unsigned long));
+	else if (len == 5)
+		return (va_arg(arg, uintmax_t));
+	if (len == 6)
+		return (va_arg(arg, size_t));
+	val = (large) ? va_arg(arg, unsigned long) : va_arg(arg, unsigned int);
+	if (!large)
+	{
+		if (len == 0)
+			val = (unsigned int)val;
+		else if (len == 1)
+			val = (unsigned char)val;
+		else if (len == 2)
+			val = (unsigned short)val;
+	}
+	return (val);
 }
 
-char		*ft_itoa_ubase(uintmax_t value, int base, int flag, int key)
+char		*ft_itoa_ubase(uintmax_t value, int base, int key)
 {
 	char		*s;
 	uintmax_t	n;
 	int			i;
 	
-	n = get_uflag(value, flag);
+	n = value;
 	i = 1;
 	while ((n /= base) >= 1)
 		i++;
 	s = (char*)malloc(sizeof(char) * (i + 1));
 	s[i] = '\0';
-	n = get_uflag(value, flag);
+	n = value;
 	while (i--)
 	{
 		if (key == 1)

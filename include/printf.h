@@ -6,7 +6,7 @@
 /*   By: kradoste <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 16:08:13 by kradoste          #+#    #+#             */
-/*   Updated: 2018/08/16 01:52:38 by kradoste         ###   ########.fr       */
+/*   Updated: 2018/08/21 18:00:49 by kradoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,15 @@ typedef struct	s_printf
 	va_list	ap;
 	char	*buf;
 	int		god;
-	int		spec;
+	int		len;
 }				t_printf;
 
-intmax_t		get_number(va_list arg, int flag);
+uintmax_t		get_unumber(va_list arg, int len, int large);
+intmax_t		get_number(va_list arg, int len, int large);
 char			*ft_itoa_base(intmax_t n);
-char			*ft_itoa_ubase(uintmax_t value, int base, int flag, int key);
+char			*ft_itoa_ubase(uintmax_t value, int base, int key);
 void			parse_lag(t_printf *p);
-void			print_str(char *str, t_printf *p);
+void			print_str(char *str, t_printf *p, int identity);
 void			print_char(char c, t_printf *p);
 int				ft_printf(const char *format, ...);
 
