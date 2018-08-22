@@ -15,7 +15,7 @@
 void	print_char(char c, t_printf *p)
 {
 	p->god++;
-	write(2, &c, 1);
+	write(1, &c, 1);
 }
 
 void	print_str(char *str, t_printf *p, int identity)
