@@ -6,7 +6,7 @@
 #    By: kradoste <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/06 22:01:09 by kradoste          #+#    #+#              #
-#    Updated: 2018/08/06 22:04:53 by kradoste         ###   ########.fr        #
+#    Updated: 2018/09/03 19:55:13 by kradoste         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -17,9 +17,11 @@ LIBFT = libft
 DIR_S = sources
 DIR_O = temporary
 HEADER = include
-SOURCES = ft_printf.c \
-		  number_in_string.c \
-		  printing.c \
+SOURCES =	ft_printf.c \
+			number_in_string.c \
+			printing.c \
+			parsing_identifier.c \
+			complete_flags.c \
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
