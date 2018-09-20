@@ -6,11 +6,54 @@
 /*   By: kradoste <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/28 21:24:35 by kradoste          #+#    #+#             */
-/*   Updated: 2018/09/07 12:42:28 by kradoste         ###   ########.fr       */
+/*   Updated: 2018/09/20 12:21:28 by kradoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
+
+char	*str_append(char *s1, char *s2, int f1, int f2)
+{
+	char	*str;
+
+	if (s1 == NULL || s2 == NULL)
+		return (ft_strdup(""));
+	if (!(str = ft_strnew(ft_strlen(s1) + ft_strlen(s2))))
+		return ((void *)0);
+	ft_strcpy(str, s1);
+	ft_strcat(str, s2);
+	if (f1)
+		free(s1);
+	if (f2)
+		free(s2);
+	return (str);
+}
+
+char	*str_appendneg(char *s1, char *s2)
+{
+	char	*str;
+
+	if (s1 == NULL || s2 == NULL)
+		return (ft_strdup(""));
+	if (!(str = ft_strnew(ft_strlen(s1) + ft_strlen(s2))))
+		return ((void *)0);
+	ft_strcpy(str, s1);
+	ft_strcat(str, &s2[1]);
+	free(s1);
+	free(s2);
+	return (str_append("-", str, 0, 1));
+}
+
+char	*str_cut(char *s1, int len)
+{
+	char	*str;
+
+	if (!(str = ft_strnew(len + 1)))
+		return (NULL);
+	ft_strncpy(str, s1, len);
+	free(s1);
+	return (str);
+}
 
 void	print_char(char c, t_printf *p)
 {

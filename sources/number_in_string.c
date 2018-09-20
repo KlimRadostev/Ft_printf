@@ -6,7 +6,7 @@
 /*   By: kradoste <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 18:19:11 by kradoste          #+#    #+#             */
-/*   Updated: 2018/08/21 17:42:12 by kradoste         ###   ########.fr       */
+/*   Updated: 2018/09/20 11:54:27 by kradoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char			*ft_itoa_base(intmax_t n)
 	return (str);
 }
 
-uintmax_t	get_unumber(va_list arg, int len, int large)
+uintmax_t		get_unumber(va_list arg, int len, int large)
 {
 	uintmax_t	val;
 
@@ -98,12 +98,12 @@ uintmax_t	get_unumber(va_list arg, int len, int large)
 	return (val);
 }
 
-char		*ft_itoa_ubase(uintmax_t value, int base, int key)
+char			*ft_itoa_ubase(uintmax_t value, int base, int key)
 {
 	char		*s;
 	uintmax_t	n;
 	int			i;
-	
+
 	n = value;
 	i = 1;
 	while ((n /= base) >= 1)
@@ -116,7 +116,7 @@ char		*ft_itoa_ubase(uintmax_t value, int base, int key)
 		if (key == 1)
 			s[i] = (n % base < 10) ? n % base + '0' : n % base + 'A' - 10;
 		else
-			s[i] = (n % base < 10) ? n % base + '0' : n % base + 'a' - 10;			
+			s[i] = (n % base < 10) ? n % base + '0' : n % base + 'a' - 10;
 		n /= base;
 	}
 	return (s);

@@ -6,7 +6,7 @@
 /*   By: kradoste <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 15:10:57 by kradoste          #+#    #+#             */
-/*   Updated: 2018/09/07 12:37:43 by kradoste         ###   ########.fr       */
+/*   Updated: 2018/09/20 11:41:06 by kradoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_alloc(char *buf, char *str)
 		return (NULL);
 }
 
-int	parse_length(char *str, int max)
+int		parse_length(char *str, int max)
 {
 	int	i;
 
@@ -66,34 +66,49 @@ int	parse_length(char *str, int max)
 	return (0);
 }
 
-void	store_buffer(t_printf *p, char *spec)
+void	store_buffer2(t_printf *p, char *spec)
 {
-	intmax_t	value;
-	uintmax_t	valor;
-
 	if (*spec == 'c' || *spec == 'C')
 	{
 		p->buf = ctos(va_arg(p->ap, int));
 		(p->buf[0] == 0) && (p->key = 1);
 	}
 	(*spec == '%') && (p->buf = ft_strdup("%"));
+	if (*spec == 'p')
+	{
+		p->buf = ft_itoa_ubase((long)(va_arg(p->ap, void*)), 16, 0);
+		p->buf = str_append("0x", p->buf, 0, 1);
+	}
 	if (*spec == 's' || *spec == 'S')
 	{
 		if (!(p->buf = ft_alloc(p->buf, va_arg(p->ap, char *))))
 			p->buf = ft_strdup("(null)");
 	}
+}
+
+void	store_buffer(t_printf *p, char *spec)
+{
+	intmax_t	value;
+	uintmax_t	valor;
+
+	if (LET(*spec) || *spec == 'p' || *spec == '%')
+		store_buffer2(p, spec);
 	else
 	{
 		if (*spec == 'd' || *spec == 'D' || *spec == 'i')
 		{
-			value = (*spec == 'D') ? get_number(p->ap, p->len, 1) : get_number(p->ap, p->len, 0);
+			value = (*spec == 'D') ?
+				get_number(p->ap, p->len, 1) : get_number(p->ap, p->len, 0);
 			p->buf = ft_itoa_base(value);
 		}
 		else
 		{
-			valor = (*spec == 'U') ? get_unumber(p->ap, p->len, 1) : get_unumber(p->ap, p->len, 0);
-			(*spec == 'o' || *spec == 'O') && (p->buf = ft_itoa_ubase(valor, 8, 0));
-			(*spec == 'u' || *spec == 'U') && (p->buf = ft_itoa_ubase(valor, 10, 0));
+			valor = (*spec == 'U') ? get_unumber(p->ap, p->len, 1)
+				: get_unumber(p->ap, p->len, 0);
+			(*spec == 'o' || *spec == 'O')
+				&& (p->buf = ft_itoa_ubase(valor, 8, 0));
+			(*spec == 'u' || *spec == 'U')
+				&& (p->buf = ft_itoa_ubase(valor, 10, 0));
 			(*spec == 'x') && (p->buf = ft_itoa_ubase(valor, 16, 0));
 			(*spec == 'X') && (p->buf = ft_itoa_ubase(valor, 16, 1));
 		}

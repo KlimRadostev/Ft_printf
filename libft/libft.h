@@ -6,7 +6,7 @@
 /*   By: kradoste <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 16:16:35 by kradoste          #+#    #+#             */
-/*   Updated: 2018/08/27 18:08:56 by kradoste         ###   ########.fr       */
+/*   Updated: 2018/09/20 12:28:49 by kradoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,6 @@ char			*ft_strtrim(char const *s);
 char			**ft_strsplit(char const *s, char c);
 char			*ft_itoa(int n);
 int				get_next_line(const int fd, char **line);
-char    		*ft_strndup(const char *s1, size_t n);
+char			*ft_strndup(const char *s1, size_t n);
 
 #endif
